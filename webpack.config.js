@@ -1,5 +1,8 @@
 const path = require("path");
 const webpack = require("webpack");
+const childProcess = require("child_process");
+const HtmlWebapckPlugin = require("html-webpack-plugin");
+
 module.exports = {
   mode: "development",
   entry: {
@@ -19,7 +22,6 @@ module.exports = {
         test: /\.(png|jpg|gif|svg)$/,
         loader: "url-loader",
         options: {
-          publicPath: "./dist/",
           name: "[name].[ext]?[hash]",
           limit: 20000, // 2kb
         },
@@ -30,7 +32,13 @@ module.exports = {
     new webpack.BannerPlugin({
       banner: `
         Build Date: ${new Date().toLocaleDateString()}
+        Commit Version ${childProcess.execSync("git rev-parse --short HEAD")}
+        Author: ${childProcess.execSync("git config user.name")}
       `,
+    }),
+    new webpack.DefinePlugin({}),
+    new HtmlWebapckPlugin({
+      template: "./src/index.html",
     }),
   ],
 };
