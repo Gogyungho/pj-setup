@@ -3,9 +3,12 @@ const webpack = require("webpack");
 const childProcess = require("child_process");
 const HtmlWebapckPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
+const isProduction = process.env.NODE_ENV === "production";
 
 module.exports = {
-  mode: "development",
+  mode: isProduction ? "production" : "development",
   entry: {
     main: "./src/app.js",
   },
@@ -17,7 +20,10 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"],
+        use: [
+          isProduction ? MiniCssExtractPlugin.loader : "style-loader",
+          "css-loader",
+        ],
       },
       {
         test: /\.(png|jpg|gif|svg)$/,
@@ -41,16 +47,18 @@ module.exports = {
     new HtmlWebapckPlugin({
       template: "./src/index.html",
       templateParameters: {
-        env: process.env.NODE_ENV === "development" ? "개발용" : "",
+        env: isProduction ? "" : "개발용",
       },
-      minify:
-        process.env.NODE_ENV === "production"
-          ? {
-              collapseWhitespace: true,
-              removeComments: true,
-            }
-          : false,
+      minify: isProduction
+        ? {
+            collapseWhitespace: true,
+            removeComments: true,
+          }
+        : false,
     }),
     new CleanWebpackPlugin({}),
+    ...(isProduction
+      ? new MiniCssExtractPlugin({ filename: "[name].css" })
+      : []),
   ],
 };
