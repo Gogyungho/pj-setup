@@ -10,7 +10,7 @@ const isProduction = process.env.NODE_ENV === "production";
 module.exports = {
   mode: isProduction ? "production" : "development",
   entry: {
-    main: "./src/app.js",
+    main: "./app.js",
   },
   output: {
     filename: "[name].js",
@@ -32,6 +32,11 @@ module.exports = {
           name: "[name].[ext]?[hash]",
           limit: 20000, // 2kb
         },
+      },
+      {
+        test: /\.js$/,
+        loader: "babel-loader",
+        exclude: /node_modules/,
       },
     ],
   },
