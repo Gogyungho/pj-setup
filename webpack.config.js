@@ -2,6 +2,7 @@ const path = require("path");
 const webpack = require("webpack");
 const childProcess = require("child_process");
 const HtmlWebapckPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
   mode: "development",
@@ -50,5 +51,6 @@ module.exports = {
             }
           : false,
     }),
+    new CleanWebpackPlugin({}),
   ],
 };
