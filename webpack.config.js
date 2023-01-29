@@ -10,13 +10,17 @@ const isProduction = process.env.NODE_ENV === "production";
 module.exports = {
   mode: isProduction ? "production" : "development",
   entry: {
+    // webpack이 처음 시작되는 부분
     main: "./app.js",
   },
   output: {
+    // entry point를 기준으로 모든 .js파일을 합쳐서 하나의 bundle 파일로 만든다.
+    // 이걸 어디에 저장할지 지정하는 option이다.
     filename: "[name].js",
     path: path.resolve("./dist"),
   },
   module: {
+    // test에 설정한 파일들을 검사하고, 조건에 맞는 파일들에 대해 loader들을 실행하고 해석한다.
     rules: [
       {
         test: /\.css$/,
@@ -41,6 +45,7 @@ module.exports = {
     ],
   },
   plugins: [
+    // 개발할때 API 서버주소, 배포했을때 API 서버 주소를 설정하는 Plugin
     new webpack.BannerPlugin({
       banner: `
         Build Date: ${new Date().toLocaleDateString()}
