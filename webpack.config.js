@@ -9,6 +9,7 @@ const isProduction = process.env.NODE_ENV === "production";
 
 module.exports = {
   mode: isProduction ? "production" : "development",
+  bail: true, // 에러 발생시 build 중단
   entry: {
     // webpack이 처음 시작되는 부분
     main: "./src/app.js",
@@ -22,6 +23,12 @@ module.exports = {
   devServer: {
     overlay: true,
     stats: "errors-only",
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+      "Access-Control-Allow-Headers":
+        "X-Requested-With, content-type, Authorization",
+    },
   },
   module: {
     // test에 설정한 파일들을 검사하고, 조건에 맞는 파일들에 대해 loader들을 실행하고 해석한다.
