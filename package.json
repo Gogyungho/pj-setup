@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack",
+    "build-stage": "NODE_ENV=development webpack --progess",
+    "build-prod": "NODE_ENV=production webpack --progess",
     "lint": "eslint src --fix",
     "start": "webpack-dev-server --progess"
   },
@@ -17,6 +18,7 @@
     "@babel/plugin-transform-block-scoping": "^7.20.11",
     "@babel/plugin-transform-strict-mode": "^7.18.6",
     "@babel/preset-env": "^7.20.2",
+    "axios": "^1.2.6",
     "babel-loader": "^8.3.0",
     "clean-webpack-plugin": "^3.0.0",
     "core-js": "^2.6.12",
@@ -35,6 +37,8 @@
   "devDependencies": {
     "css-loader": "^3.6.0",
     "eslint": "^8.32.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.8",
+    "terser-webpack-plugin": "^2.3.8",
     "webpack": "^4.46.0",
     "webpack-cli": "^3.3.12"
   },

@@ -4,11 +4,14 @@ const childProcess = require("child_process");
 const HtmlWebapckPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const OptimizeCSSAssertsplugin = require("optimize-css-assets-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 
 const isProduction = process.env.NODE_ENV === "production";
+const mode = process.env.NODE_ENV || "development";
 
 module.exports = {
-  mode: isProduction ? "production" : "development",
+  mode,
   bail: true, // 에러 발생시 build 중단
   entry: {
     // webpack이 처음 시작되는 부분
@@ -21,6 +24,7 @@ module.exports = {
     path: path.resolve("./dist"),
   },
   devServer: {
+    hot: true,
     overlay: true,
     stats: "errors-only",
     headers: {
@@ -29,6 +33,20 @@ module.exports = {
       "Access-Control-Allow-Headers":
         "X-Requested-With, content-type, Authorization",
     },
+  },
+  optimization: {
+    minimizer: isProduction
+      ? [
+          new OptimizeCSSAssertsplugin(),
+          new TerserPlugin({
+            terserOptions: {
+              compress: {
+                drop_console: true, // 콘솔 로그를 제거한다
+              },
+            },
+          }),
+        ]
+      : [],
   },
   module: {
     // test에 설정한 파일들을 검사하고, 조건에 맞는 파일들에 대해 loader들을 실행하고 해석한다.
