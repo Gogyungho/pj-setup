@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "lib": ["DOM", "ESNext"],
+    "strict": true,
+    "noEmit": true,
+    "checkJs": true, // 일반 js 파일에서도 에러체크 여부
+    "allowJs": true,
+    "sourceMap": true,
+    "jsx": "react",
+    "noImplicitAny": true, // any 타입 금지
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "noImplicitThis": true, //this 키워드가 any 타입일 경우 에러
+    "noUnusedLocals": true, //쓰지않는 지역변수 있으면 에러
+    "noUnusedParameters": true, //쓰지않는 파라미터 있으면 에러
+    "noImplicitReturns": true, //함수에서 return 빼먹으면 에러
+    "noFallthroughCasesInSwitch": true, //switch문 이상하면 에러
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true //파일명 대소분자 구분
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
+}
